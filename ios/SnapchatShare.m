@@ -35,7 +35,32 @@ RCT_EXPORT_MODULE();
     NSLog(@"Try open view");
 
     // #TODO: Check duration (max 10 secs)
-    if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:@"snapchat://"]]) {
+    if ([options[@"url"] rangeOfString:@"png"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
+            
+        NSLog(@"png");
+        NSURL * imageUrl = [NSURL URLWithString: options[@"url"]];
+        /* Main image content to be used in Snap */
+        SCSDKSnapPhoto *image = [[SCSDKSnapPhoto alloc] initWithImageUrl:imageUrl];
+        SCSDKPhotoSnapContent *imageContent = [[SCSDKPhotoSnapContent alloc] initWithSnapPhoto:image];
+        // we use title instead of message because it will get appended to url
+        if ([options objectForKey:@"title"]) {
+            imageContent.caption = options[@"title"];
+        }
+        if ([options objectForKey:@"attachmentUrl"]) {
+            imageContent.attachmentUrl = options[@"attachmentUrl"];
+        }
+        // snap.sticker = sticker; /* Optional */
+
+        [_scSdkSnapApi startSendingContent:imageContent completionHandler:^(NSError *error) {
+            /* Handle response */
+            if (error) {
+                failureCallback(error);
+            } else {
+                successCallback(@[]);
+            }
+        }];
+    // send sticker
+    } else if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:@"snapchat://"]]) {
         // send a video
         if ([options[@"url"] rangeOfString:@"mp4"].location != NSNotFound) {
             NSLog(@"video");
@@ -89,31 +114,6 @@ RCT_EXPORT_MODULE();
             @finally {
             }
         // send image
-        } else if ([options[@"url"] rangeOfString:@"png"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
-            
-            NSLog(@"png");
-            NSURL * imageUrl = [NSURL URLWithString: options[@"url"]];
-            /* Main image content to be used in Snap */
-            SCSDKSnapPhoto *image = [[SCSDKSnapPhoto alloc] initWithImageUrl:imageUrl];
-            SCSDKPhotoSnapContent *imageContent = [[SCSDKPhotoSnapContent alloc] initWithSnapPhoto:image];
-            // we use title instead of message because it will get appended to url
-            if ([options objectForKey:@"title"]) {
-                imageContent.caption = options[@"title"];
-            }
-            if ([options objectForKey:@"attachmentUrl"]) {
-                imageContent.attachmentUrl = options[@"attachmentUrl"];
-            }
-            // snap.sticker = sticker; /* Optional */
-
-            [_scSdkSnapApi startSendingContent:imageContent completionHandler:^(NSError *error) {
-                /* Handle response */
-                if (error) {
-                    failureCallback(error);
-                } else {
-                    successCallback(@[]);
-                }
-            }];
-        // send sticker
         } else if ([options[@"url"] rangeOfString:@"png"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
             
             NSLog(@"sticker");
