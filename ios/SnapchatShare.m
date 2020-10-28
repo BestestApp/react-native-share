@@ -61,7 +61,7 @@ RCT_EXPORT_MODULE();
             SCSDKSnapSticker *sticker = [[SCSDKSnapSticker alloc] initWithStickerUrl:stickerUrl isAnimated:NO];
             
             NSLog(@"png7");
-            imageContent.sticker = sticker; /* Optional */
+            //imageContent.sticker = sticker; /* Optional */
 
             NSLog(@"png8");
             [_scSdkSnapApi startSendingContent:imageContent completionHandler:^(NSError *error) {
