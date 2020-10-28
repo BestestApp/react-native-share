@@ -67,7 +67,7 @@ RCT_EXPORT_MODULE();
             [_scSdkSnapApi startSendingContent:imageContent completionHandler:^(NSError *error) {
                 /* Handle response */
                 if (error) {
-                    NSLog(@error);
+                    //NSLog(@error);
                     failureCallback(error);
                 } else {
                 NSLog(@"png9");
