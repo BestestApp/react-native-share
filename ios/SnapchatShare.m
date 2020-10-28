@@ -90,7 +90,7 @@ RCT_EXPORT_MODULE();
             @finally {
             }
         // send image
-        } else if ([options[@"url"] rangeOfString:@"jpg"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
+        } else if ([options[@"url"] rangeOfString:@"png"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
             NSURL * imageUrl = [NSURL URLWithString: options[@"url"]];
             /* Main image content to be used in Snap */
             SCSDKSnapPhoto *image = [[SCSDKSnapPhoto alloc] initWithImageUrl:imageUrl];
@@ -113,7 +113,7 @@ RCT_EXPORT_MODULE();
                 }
             }];
         // send sticker
-        } else if ([options[@"url"] rangeOfString:@"jpg"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
+        } else if ([options[@"url"] rangeOfString:@"png"].location != NSNotFound && ![options objectForKey:@"sticker"]) {
             NSURL * stickerUrl = [NSURL URLWithString: options[@"url"]];
             SCSDKSnapSticker *sticker = [[SCSDKSnapSticker alloc] initWithStickerUrl:stickerUrl isAnimated:NO];
             [_scSdkSnapApi startSendingContent:sticker completionHandler:^(NSError *error) {
