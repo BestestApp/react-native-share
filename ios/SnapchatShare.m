@@ -53,7 +53,7 @@ RCT_EXPORT_MODULE();
             }
             NSURL * stickerUrl = [NSURL URLWithString: options[@"sticker"]];
             SCSDKSnapSticker *sticker = [[SCSDKSnapSticker alloc] initWithStickerUrl:stickerUrl isAnimated:NO];
-            snap.sticker = sticker; /* Optional */
+            imageContent.sticker = sticker; /* Optional */
 
             [_scSdkSnapApi startSendingContent:imageContent completionHandler:^(NSError *error) {
                 /* Handle response */
