@@ -37,7 +37,10 @@
             message = [message stringByAppendingString: [@" " stringByAppendingString: [RCTConvert NSString:options[@"url"]]] ];
         }
 
-        NSString * urlWhats = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@", email, subject, message ];
+        NSString * urlWhats = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@",
+                        [email stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
+                        [subject stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
+                        [message stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding] ];
         NSURL * whatsappURL = [NSURL URLWithString:[urlWhats stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
         if ([[UIApplication sharedApplication] canOpenURL: whatsappURL]) {
