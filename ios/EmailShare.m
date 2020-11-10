@@ -38,9 +38,9 @@
         }
 
         NSString * urlWhats = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@",
-                        [email stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
-                        [subject stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding],
-                        [message stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding] ];
+                        email,
+                        subject,
+                        [message stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding] ];
         NSURL * whatsappURL = [NSURL URLWithString:[urlWhats stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
         if ([[UIApplication sharedApplication] canOpenURL: whatsappURL]) {
