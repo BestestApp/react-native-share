@@ -44,21 +44,27 @@ RCT_EXPORT_MODULE();
             NSLog(@"png1");
             /* Main image content to be used in Snap */
             SCSDKSnapPhoto *image = [[SCSDKSnapPhoto alloc] initWithImageUrl:imageUrl];
+            NSLog(@"imageUrl = %@", imageUrl);
             NSLog(@"png2");
             SCSDKPhotoSnapContent *imageContent = [[SCSDKPhotoSnapContent alloc] initWithSnapPhoto:image];
             // we use title instead of message because it will get appended to url
             NSLog(@"png3");
             if ([options objectForKey:@"title"]) {
                 imageContent.caption = options[@"title"];
+                NSLog(@"caption = %@", imageContent.caption);
             }
             NSLog(@"png4");
             if ([options objectForKey:@"attachmentUrl"]) {
                 imageContent.attachmentUrl = options[@"attachmentUrl"];
+                NSLog(@"attachmentUrl = %@", imageContent.attachmentUrl);
             }
             NSLog(@"png5");
-            NSURL * stickerUrl = [NSURL URLWithString: options[@"sticker"]];
-            NSLog(@"png6");
-            SCSDKSnapSticker *sticker = [[SCSDKSnapSticker alloc] initWithStickerUrl:stickerUrl isAnimated:NO];
+            if ([options objectForKey:@"sticker"]) {
+                NSURL * stickerUrl = [NSURL URLWithString: options[@"sticker"]];
+                NSLog(@"png6");
+                NSLog(@"sticker = %@", stickerUrl);
+                SCSDKSnapSticker *sticker = [[SCSDKSnapSticker alloc] initWithStickerUrl:stickerUrl isAnimated:NO];
+            }
             
             NSLog(@"png7");
             //imageContent.sticker = sticker; /* Optional */
@@ -67,7 +73,7 @@ RCT_EXPORT_MODULE();
             [_scSdkSnapApi startSendingContent:imageContent completionHandler:^(NSError *error) {
                 /* Handle response */
                 if (error) {
-                    //NSLog(@error);
+                    NSLog(@error);
                     failureCallback(error);
                 } else {
                 NSLog(@"png9");
