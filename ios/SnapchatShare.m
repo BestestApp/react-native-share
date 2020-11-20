@@ -35,7 +35,13 @@ RCT_EXPORT_MODULE();
     NSLog(@"Try open view");
     if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:@"snapchat://"]]) {
             // send a video
-            
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        NSLog(@"SNAPCHAT BUNDLE ID: %@", bundleIdentifier);
+
+        NSBundle* mainBundle = [NSBundle mainBundle]; 
+        // Reads the value of the custom key I added to the Info.plist
+        NSString *value = [mainBundle objectForInfoDictionaryKey:@"SCSDKClientId"];
+        NSLog(@"SNAPCHAT SCSDKClientId: %@", value);
         // #TODO: Check duration (max 10 secs)
         if ([options[@"url"] rangeOfString:@"png"].location != NSNotFound) {
 
